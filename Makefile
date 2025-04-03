@@ -1,26 +1,22 @@
-# Variables
-CXX = g++                   # Especifica el compilador
-CXXFLAGS = -Wall -std=c++11  -I/usr/include/nlohmann # Opciones del compilador: -Wall para las advertencias y -std=c++11 para usar C++11
-LIBS = -lcurl                # Especifica que se debe enlazar la biblioteca curl
+CXX = g++
+CXXFLAGS = -std=c++11
 
+all: nutricion
 
-# Nombre del ejecutable
-TARGET = programa
+nutricion: main.o Receta.o AnalisisNutricional.o Traductor.o
+	$(CXX) $(CXXFLAGS) -o nutricion main.o Receta.o AnalisisNutricional.o Traductor.o -lcurl
 
-# Archivos fuente
-SRCS = main.cpp
+main.o: main.cpp
+	$(CXX) $(CXXFLAGS) -c main.cpp
 
-# Archivos objeto (se generan automáticamente a partir de SRCS)
-OBJS = $(SRCS:.cpp=.o)
+Receta.o: Receta.cpp
+	$(CXX) $(CXXFLAGS) -c Receta.cpp
 
-# Regla principal: compilar todo
-$(TARGET): $(OBJS)
-	$(CXX) -o $(TARGET) $(OBJS) $(LIBS)   # Enlaza los objetos y la biblioteca curl
+AnalisisNutricional.o: AnalisisNutricional.cpp
+	$(CXX) $(CXXFLAGS) -c AnalisisNutricional.cpp
 
-# Regla para compilar archivos .cpp a archivos .o
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+Traductor.o: Traductor.cpp
+	$(CXX) $(CXXFLAGS) -c Traductor.cpp
 
-# Limpieza de archivos generados (.o y el ejecutable)
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f *.o nutricion
