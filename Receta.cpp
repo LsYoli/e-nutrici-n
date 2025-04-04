@@ -9,12 +9,12 @@ void Receta::solicitar() {
     std::cout << "¿En qué idioma deseas ingresar tu receta? (es/en): ";
     std::string idioma;
     std::cin >> idioma;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Limpiar el buffer
 
     esEspanol = (idioma == "es");
 
     std::cout << "Ingresa tu receta (" << (esEspanol ? "español" : "inglés") << "):\n> ";
-    std::getline(std::cin, textoOriginal);
+    std::getline(std::cin, textoOriginal); // Leer la receta
 
     if (textoOriginal.empty()) {
         std::cerr << "❌ No ingresaste ningún texto. Intenta de nuevo.\n";
